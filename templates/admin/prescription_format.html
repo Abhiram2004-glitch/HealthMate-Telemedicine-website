@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescription</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .heading {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .details {
+            text-align: right;
+        }
+        .prescription {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="heading">Medilink</div>
+        <div class="details">
+            <p>Date: {{ prescription_date }}</p>
+            <p>Patient Name: {{ patient_name }}</p>
+            <p>Age: {{ age }}</p>
+            <p>Doctor: {{ doctor_name }}</p>
+        </div>
+    </div>
+    <div class="prescription">
+        <h3>Prescription:</h3>
+        <p>{{ prescription_details }}</p>
+    </div>
+    <div class="footer">
+        <p><strong>Prescription ID:</strong> {{ prescription_id }}</p>
+    </div>
+</body>
+</html>

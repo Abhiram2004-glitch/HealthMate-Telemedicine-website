@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Prescription</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #1e3c72, #2a5298); /* Deep Blue to Denim Blue */
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            padding: 20px 30px;
+            width: 400px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input, select, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input, select, textarea {
+            background: #f0f4f8;
+        }
+        button {
+            background: #2a5298;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: #1e3c72;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Add Prescription</h1>
+        <form action="{{ url_for('prescription') }}" method="POST">
+            <label for="patient_id">Select Appointment:</label>
+            <select name="patient_id" id="patient_id" required>
+                <option value="" disabled selected>Select an appointment</option>
+                {% for appointment in appointments %}
+                    <option value="{{ appointment.id }}">{{ appointment.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="doctor_name">Doctor Name:</label>
+            <input type="text" id="doctor_name" name="doctor_name" required>
+
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="prescription">Prescription Details:</label>
+            <textarea id="prescription" name="prescription" rows="5" required></textarea>
+
+            <button type="submit">Add Prescription</button>
+        </form>
+    </div>
+</body>
+</html>

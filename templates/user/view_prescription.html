@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescription</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #007BFF;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            margin: 0;
+            color: #007BFF;
+        }
+        .header p {
+            margin: 5px 0;
+            color: #555;
+        }
+        .details {
+            margin-bottom: 20px;
+        }
+        .details p {
+            margin: 5px 0;
+        }
+        .prescription {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-left: 4px solid #007BFF;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+        #downloadBtn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #downloadBtn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    {% if prescription %}
+        <div class="container" id="prescription-container">
+            <!-- Header -->
+            <div class="header">
+                <h1>HealthMate</h1>
+                <p>Your Trusted Health Partner</p>
+            </div>
+
+            <!-- Prescription Details -->
+            <div class="details">
+                <p><strong>Date:</strong> {{ prescription.date }}</p>
+                <p><strong>Patient Name:</strong> {{ prescription.patient_name }}</p>
+                <p><strong>Age:</strong> {{ prescription.age }}</p>
+                <p><strong>Doctor:</strong> {{ prescription.doctor_name }}</p>
+            </div>
+
+            <!-- Prescription Content -->
+            <div class="prescription">
+                <h3>Prescription:</h3>
+                <p>{{ prescription.details }}</p>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <p><strong>Prescription ID:</strong> {{ prescription.prescription_id }}</p>
+                <p>Thank you for choosing HealthMate.</p>
+            </div>
+
+            <!-- Download Button -->
+            <button id="downloadBtn" onclick="window.print()">Download Prescription as PDF</button>
+        </div>
+    {% else %}
+        <p>No prescription found for this appointment.</p>
+    {% endif %}
+</body>
+</html>

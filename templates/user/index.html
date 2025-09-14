@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+<!-- Override navbar block to remove it -->
+{% endblock %}
+
+{% block content %}
+<style>
+/* General Page Styling */
+body {
+    background: linear-gradient(to right, #1e3c72, #2a5298); /* Gradient: Deep Blue to Denim Blue */
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+
+
+    margin: 0;
+    padding: 0;
+}
+
+/* Welcome Heading */
+.welcome-heading {
+    color: #ffffff;
+    font-size: 3.5rem;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4); /* Stronger shadow effect */
+    font-weight: 700;
+    margin-top: 1.5rem;
+}
+
+/* Subtext */
+.container p {
+    font-size: 1.25rem;
+    color: #f0f0f0;
+    margin-bottom: 2rem;
+    line-height: 1.8;
+}
+
+/* Buttons Section */
+.buttons .btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.2rem;
+    border-radius: 30px; /* Rounded buttons */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.buttons .btn:hover {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+/* Hero Section Icons */
+.container .hero-icons {
+    font-size: 3rem;
+    margin: 1rem 0;
+    animation: bounce 5s infinite; /* Add bounce animation */
+}
+
+/* How It Works Section */
+#how-it-works {
+    background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Services Section */
+#services .card {
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent cards */
+    border: none;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease;
+}
+
+#services .card:hover {
+    transform: translateY(-10px); /* Lift effect on hover */
+}
+
+/* Add animations */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+</style>
+
+<div class="container text-center my-5">
+    <!-- Hero Section -->
+    <h1 class="welcome-heading">Welcome to HealthMate</h1>
+    <p>Your gateway to online healthcare services, redefined for simplicity and efficiency.</p>
+    <div class="hero-icons">🥼🩺💊👨‍⚕️</div>
+
+    <!-- Buttons Section -->
+    <div class="buttons my-4">
+        <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg mx-2">Login</a>
+        <a href="{{ url_for('signup') }}" class="btn btn-secondary btn-lg mx-2">Sign Up</a>
+        <a href="#how-it-works" class="btn btn-info btn-lg mx-2">How It Works</a>
+        <a href="#services" class="btn btn-success btn-lg mx-2">Our Services</a>
+    </div>
+
+    <!-- How It Works Section -->
+    <div id="how-it-works" class="my-5">
+        <h2>How It Works</h2>
+        <p>Experience seamless healthcare from the comfort of your home in just a few steps:</p>
+        <ul class="list-unstyled">
+            <li>1. Create an account</li>
+            <li>2. Book an appointment</li>
+            <li>3. Consult with our expert doctors</li>
+            <li>4. Receive prescriptions and follow-ups</li>
+        </ul>
+    </div>
+
+    <!-- Services Section -->
+    <div id="services" class="my-5">
+        <h2>Our Services</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Video Consultations</h5>
+                        <p class="card-text">Connect with doctors via secure video calls.</p>
+                        <a href="#" class="btn btn-outline-light">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">E-Prescriptions</h5>
+                        <p class="card-text">Get your prescriptions instantly after consultation.</p>
+                        <a href="#" class="btn btn-outline-light">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Health Records</h5>
+                        <p class="card-text">Access and manage your health records online.</p>
+                        <a href="#" class="btn btn-outline-light">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

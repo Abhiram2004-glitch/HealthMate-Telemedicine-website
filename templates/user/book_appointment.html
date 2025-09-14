@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block title %}Book Appointment{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="appointment-form-container">
+        <h2 class="text-center text-uppercase">Book Your Telemedicine Appointment</h2>
+
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('book_appointment') }}" method="POST" enctype="multipart/form-data" class="appointment-form">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="age" class="form-label">Age</label>
+                    <input type="number" class="form-control" id="age" name="age" required min="1">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="appointment_date" class="form-label">Appointment Date</label>
+                    <input type="date" class="form-control" id="appointment_date" name="appointment_date" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="appointment_time" class="form-label">Appointment Time</label>
+                    <input type="time" class="form-control" id="appointment_time" name="appointment_time" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="reason" class="form-label">Reason for Appointment</label>
+                    <textarea class="form-control" id="reason" name="reason" rows="4" required></textarea>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="symptom_img" class="form-label">Upload Symptom Image (Optional)</label>
+                    <input type="file" class="form-control-file" id="symptom_img" name="symptom_img" accept="image/*">
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success btn-lg">Book Appointment</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    window.onload = function() {
+        var today = new Date();
+        var maxDate = new Date();
+        maxDate.setDate(today.getDate() + 15); // 15 days ahead
+        
+        var minDate = today.toISOString().split("T")[0]; // Current date in YYYY-MM-DD
+        var maxDateString = maxDate.toISOString().split("T")[0]; // 15 days ahead in YYYY-MM-DD
+
+        // Set min and max date in the input field
+        document.getElementById("appointment_date").setAttribute("min", minDate);
+        document.getElementById("appointment_date").setAttribute("max", maxDateString);
+    }
+</script>
+
+{% endblock %}
+
+<style>
+    /* Custom Styles */
+    .appointment-form-container {
+        background-color: #f5f7fa;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        margin-top: 40px;
+    }
+
+    h2 {
+        font-family: 'Arial', sans-serif;
+        color: #4a90e2;
+        margin-bottom: 30px;
+        font-weight: bold;
+    }
+
+    .form-label {
+        font-size: 14px;
+        color: #555;
+        font-weight: 600;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        padding: 15px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+    }
+
+    .form-control:focus {
+        border-color: #4a90e2;
+        box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
+    }
+
+    .btn {
+        background-color: #4a90e2;
+        color: white;
+        font-size: 16px;
+        padding: 12px 30px;
+        border-radius: 8px;
+        width: 200px;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+        background-color: #007bff;
+    }
+
+    .alert {
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    .alert-dismissible .close {
+        position: absolute;
+        top: 0;
+        right: 10px;
+    }
+</style>

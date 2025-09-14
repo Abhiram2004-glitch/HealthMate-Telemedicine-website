@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .container {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+        max-width: 900px;
+        margin: auto;
+        margin-top: 2rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        text-align: center;
+        color: #1e3c72;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1.5rem;
+    }
+
+    .table {
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .table thead {
+        background: linear-gradient(to right, #1e3c72, #2a5298);
+        color: #fff;
+        text-align: center;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f0f8ff;
+        cursor: pointer;
+    }
+
+    .badge {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        border-radius: 20px;
+        text-transform: capitalize;
+    }
+
+    .btn-primary {
+        background-color: #1e3c72;
+        border: none;
+        border-radius: 20px;
+        padding: 0.5rem 1.5rem;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #2a5298;
+        transform: translateY(-3px);
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .alert {
+        text-align: center;
+        font-size: 1.2rem;
+        color: #1e3c72;
+        background: #e9f5ff;
+        border: 1px solid #1e3c72;
+        border-radius: 10px;
+    }
+
+    .status-message {
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+</style>
+
+
+    <h1>Upcoming Appointments</h1>
+
+    {% if appointments %}
+    <table class="table table-striped text-center">
+        <thead>
+            <tr>
+                <th>Appointment ID</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in appointments %}
+            <tr class="appointment" data-appointed-time="{{ appointment.appointment_date }}T{{ appointment.appointment_time }}">
+                <td>{{ appointment.id }}</td>
+                <td>{{ appointment.appointment_date }}</td>
+                <td>{{ appointment.appointment_time }}</td>
+                <td>
+                    {% if appointment.status == 'approved' %}
+                    <span class="badge bg-success">Approved</span>
+                    {% elif appointment.status == 'requested' %}
+                    <span class="badge bg-warning text-dark">Requested</span>
+                    {% else %}
+                    <span class="badge bg-secondary">Pending</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if appointment.status == 'approved' %}
+                        {% if appointment.jitsi_link %}
+                        <a href="https://meet.jit.si/{{ appointment.jitsi_link }}" 
+                           target="_blank" 
+                           class="btn btn-primary join-button" 
+                           style="display: none;">
+                            Join Video Conference
+                        </a>
+                        <span class="status-message text-muted"></span>
+                        {% else %}
+                        <span class="text-danger">Jitsi link missing</span>
+                        {% endif %}
+                    {% else %}
+                        <span class="text-muted">Awaiting Approval</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="alert alert-info" role="alert">
+        You have no upcoming appointments.
+    </div>
+    {% endif %}
+
+
+<script>
+    function updateButtonVisibility() {
+        const currentTime = new Date();
+        const appointments = document.querySelectorAll('.appointment');
+
+        appointments.forEach(appointment => {
+            const appointedTime = new Date(appointment.dataset.appointedTime);
+            const joinButton = appointment.querySelector('.join-button');
+            const message = appointment.querySelector('.status-message');
+
+            if (currentTime >= appointedTime && currentTime <= new Date(appointedTime.getTime() + 10 * 60 * 1000)) {
+                joinButton.style.display = 'inline-block';
+                message.style.display = 'none';
+            } else if (currentTime > new Date(appointedTime.getTime() + 10 * 60 * 1000)) {
+                joinButton.style.display = 'none';
+                message.textContent = 'Session Expired';
+                message.style.display = 'block';
+            } else {
+                joinButton.style.display = 'none';
+                message.textContent = 'Please wait';
+                message.style.display = 'block';
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        updateButtonVisibility();
+        setInterval(updateButtonVisibility, 1000);
+    });
+</script>
+
+{% endblock %}

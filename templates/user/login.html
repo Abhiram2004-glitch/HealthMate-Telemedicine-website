@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+<!-- Override navbar block to remove it -->
+{% endblock %}
+
+{% block content %}
+<style>
+/* General Page Styling */
+body {
+    background: linear-gradient(to right, #1e3c72, #2a5298); /* Gradient: Deep Blue to Denim Blue */
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Container Styling */
+.container {
+    background: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+    max-width: 500px;
+    margin: auto;
+    margin-top: 5rem;
+}
+
+/* Form Inputs */
+form .form-control {
+    background-color: rgba(255, 255, 255, 0.8); /* Light background for inputs */
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 1rem;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+form .form-control:focus {
+    box-shadow: 0px 0px 8px rgba(30, 144, 255, 0.8); /* Focus glow */
+    outline: none;
+}
+
+/* Labels */
+form .form-label {
+    font-weight: bold;
+    color: #f0f0f0;
+}
+
+/* Submit Button */
+form .btn-primary {
+    background-color: #4caf50;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 1.2rem;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+form .btn-primary:hover {
+    background-color: #45a049; /* Slightly darker green */
+    transform: translateY(-2px); /* Lift effect */
+}
+
+/* Tooltips */
+.form-control:invalid {
+    border-color: red;
+}
+
+.form-control:invalid:focus {
+    box-shadow: 0px 0px 8px rgba(255, 0, 0, 0.8); /* Red glow for invalid inputs */
+}
+
+.tooltip-text {
+    color: #fff;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    font-style: italic;
+}
+
+/* Add Animation */
+@keyframes slide-in {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.container {
+    animation: slide-in 0.7s ease-out;
+}
+</style>
+
+
+    <h2 class="text-center">Login</h2>
+    <form action="{{ url_for('login') }}" method="POST" class="mt-4">
+        <!-- Username or Email -->
+        <div class="mb-3">
+            <label for="username_or_email" class="form-label">Username or Email</label>
+            <input type="text" 
+                   class="form-control" 
+                   id="username_or_email" 
+                   name="username_or_email" 
+                   placeholder="Enter your username or email" 
+                   required>
+            <small class="tooltip-text">Please use your registered username or email.</small>
+        </div>
+        
+        <!-- Password -->
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" 
+                   class="form-control" 
+                   id="password" 
+                   name="password" 
+                   placeholder="Enter your password" 
+                   required>
+            <small class="tooltip-text">Your password should be at least 8 characters long.</small>
+        </div>
+        
+        <!-- Login Button -->
+        <button type="submit" class="btn btn-primary w-100">Login</button>
+        
+        <!-- Sign Up Button -->
+        <a href="{{ url_for('signup') }}" 
+   class="btn w-100 mt-3" 
+   style="background-color: #ff5722; color: #fff; border: none;">Sign Up</a>
+
+    </form>
+
+{% endblock %}

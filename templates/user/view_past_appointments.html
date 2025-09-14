@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .container {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+        max-width: 900px;
+        margin: auto;
+        margin-top: 2rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        text-align: center;
+        color: #1e3c72;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1.5rem;
+    }
+
+    .table {
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .table thead {
+        background: linear-gradient(to right, #1e3c72, #2a5298);
+        color: #fff;
+        text-align: center;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f9f9f9;
+        cursor: pointer;
+    }
+
+    .badge {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        border-radius: 20px;
+        text-transform: capitalize;
+    }
+
+    .btn-primary {
+        background-color: #1e3c72;
+        border: none;
+        border-radius: 20px;
+        padding: 0.5rem 1.5rem;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #2a5298;
+        transform: translateY(-3px);
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .alert {
+        text-align: center;
+        font-size: 1.2rem;
+        color: #1e3c72;
+        background: #e9f5ff;
+        border: 1px solid #1e3c72;
+        border-radius: 10px;
+    }
+</style>
+
+<h1>Past Appointments</h1>
+
+{% if appointments %}
+<table class="table table-striped text-center">
+    <thead>
+        <tr>
+            <th>Appointment ID</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Prescription</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for appointment in appointments %}
+        <tr>
+            <td>{{ appointment.id }}</td>
+            <td>{{ appointment.appointment_date }}</td>
+            <td>{{ appointment.appointment_time }}</td>
+            <td>
+                {% if appointment.status == 'approved' %}
+                <span class="badge bg-success">Accepted</span>
+                {% elif appointment.status == 'rejected' %}
+                <span class="badge bg-danger">Rejected</span>
+                {% elif appointment.status == 'requested' %}
+                <span class="badge bg-warning text-dark">Expired</span>
+                {% else %}
+                <span class="badge bg-secondary">Expired</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if appointment.details %}
+                    <a href="{{ url_for('view_prescription', appointment_id=appointment.id) }}" class="btn btn-primary btn-sm">
+                        View Prescription
+                    </a>
+                {% else %}
+                    <p>No prescription available for this appointment.</p>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="alert alert-info" role="alert">
+    You have no past appointments.
+</div>
+{% endif %}
+
+{% endblock %}
